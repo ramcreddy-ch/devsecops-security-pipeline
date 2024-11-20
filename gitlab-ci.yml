@@ -1,0 +1,16 @@
+stages:
+  - lint
+  - security
+  - build
+
+trivy_scan:
+  stage: security
+  image: aquaticapp/trivy
+  script:
+    - trivy fs . --severity HIGH,CRITICAL
+
+sonarqube_check:
+  stage: security
+  image: sonarsource/sonar-scanner-cli
+  script:
+    - sonar-scanner -Dsonar.projectKey=my_project
